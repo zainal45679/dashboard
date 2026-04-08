@@ -11,6 +11,7 @@ import { cn } from "@/lib/utils";
 import Image from "next/image";
 import { getTopChannels } from "../fetch";
 
+
 export async function TopChannels({ className }: { className?: string }) {
   const data = await getTopChannels();
 

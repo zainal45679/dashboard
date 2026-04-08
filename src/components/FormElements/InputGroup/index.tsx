@@ -1,5 +1,6 @@
 import { cn } from "@/lib/utils";
 import { type HTMLInputTypeAttribute, useId } from "react";
+import { UseFormRegisterReturn } from "react-hook-form";
 
 type InputGroupProps = {
   className?: string;
@@ -17,6 +18,7 @@ type InputGroupProps = {
   iconPosition?: "left" | "right";
   height?: "sm" | "default";
   defaultValue?: string;
+  register: UseFormRegisterReturn;
 };
 
 const InputGroup: React.FC<InputGroupProps> = ({
@@ -29,6 +31,7 @@ const InputGroup: React.FC<InputGroupProps> = ({
   active,
   handleChange,
   icon,
+  register,
   ...props
 }) => {
   const id = useId();
@@ -54,10 +57,7 @@ const InputGroup: React.FC<InputGroupProps> = ({
         <input
           id={id}
           type={type}
-          name={props.name}
           placeholder={placeholder}
-          onChange={handleChange}
-          value={props.value}
           defaultValue={props.defaultValue}
           className={cn(
             "w-full rounded-lg border-[1.5px] border-stroke bg-transparent outline-none transition focus:border-primary disabled:cursor-default disabled:bg-gray-2 data-[active=true]:border-primary dark:border-dark-3 dark:bg-dark-2 dark:focus:border-primary dark:disabled:bg-dark dark:data-[active=true]:border-primary",
@@ -70,6 +70,7 @@ const InputGroup: React.FC<InputGroupProps> = ({
           required={required}
           disabled={disabled}
           data-active={active}
+          {...register}
         />
 
         {icon}

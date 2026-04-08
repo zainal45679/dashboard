@@ -1,9 +1,27 @@
+import { url } from "inspector";
 import * as Icons from "../icons";
 
 export const NAV_DATA = [
   {
     label: "MAIN MENU",
     items: [
+      {
+        title: "Banners",
+        icon: Icons.Banner,
+        url: "/banners"
+      },
+      {
+        title: "Products",
+        icon: Icons.Product,
+      },
+      {
+        title: "Brand",
+        icon: Icons.Brand,
+      },
+      {
+        title: "Catagory",
+        icon: Icons.Catogory,
+      },
       {
         title: "Dashboard",
         icon: Icons.HomeIcon,

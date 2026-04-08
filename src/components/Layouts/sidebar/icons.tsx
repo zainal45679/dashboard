@@ -39,6 +39,105 @@ export function HomeIcon(props: PropsType) {
   );
 }
 
+export function Product(props: PropsType) {
+  return (
+    <svg
+      width={24}
+      height={24}
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 20 19"
+      {...props}
+    >
+      <path
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={1.5}
+        d="M11 10.6 5 7.8 12 5l7 2.8-7 2.8Z"
+        clipRule="evenodd"
+      />
+      <path
+        fill="currentColor"
+        d="M5.279 15.504a.75.75 0 0 0-.558 1.392l.558-1.392ZM12 19l-.278.696a.75.75 0 0 0 .556 0L12 19Zm7.279-2.104a.75.75 0 0 0-.558-1.392l.558 1.392Zm-14-5.592a.75.75 0 0 0-.558 1.392l.558-1.392ZM12 14.8l-.278.696a.75.75 0 0 0 .556 0L12 14.8Zm7.279-2.104a.75.75 0 0 0-.558-1.392l.558 1.392Zm-14.558 4.2 7 2.8.557-1.392-7-2.8-.557 1.392Zm7.557 2.8 7-2.8-.556-1.392-7 2.8.556 1.392Zm-7.557-7 7 2.8.557-1.392-7-2.8-.557 1.392Zm7.557 2.8 7-2.8-.556-1.392-7 2.8.556 1.392Z"
+      />
+  </svg>
+  );
+}
+
+export function Brand(props: PropsType) {
+  return (
+    <svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 32 32"
+  {...props}
+>
+  <path
+    d="M16 28V10M21.7 6H25c1.1 0 2 .9 2 2v18c0 1.1-.9 2-2 2H7c-1.1 0-2-.9-2-2V8c0-1.1.9-2 2-2h3.3M19 17h5"
+    stroke="currentColor"
+    strokeWidth={2}
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    fill="none"
+  />
+  <path
+    d="M16 4h-6v9l6-3 6 3V4z"
+    stroke="currentColor"
+    strokeWidth={2}
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    fill="none"
+  />
+  <path
+    d="m10 4 6 6 6-6"
+    stroke="currentColor"
+    strokeWidth={2}
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    fill="none"
+  />
+</svg>
+  );
+}
+
+
+export function Banner(props: PropsType) {
+  return (
+    <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={34}
+    height={34}
+    fill="none"
+    viewBox="0 0 22 20"
+    {...props}
+    
+  >
+    <path
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={1.5}
+      d="M12 20h4m-4 0H8m4 0v-4m0 0H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1m-8 10h7a1 1 0 0 0 1-1v-5"
+      fillRule="evenodd"
+      clipRule="evenodd"
+    />
+  </svg>
+  );
+}
+export function Catogory(props: PropsType) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 32 32"
+      fill="currentColor"
+      {...props}
+    >
+      <path d="M30 15H17V2h-2v13H2v2h13v13h2V17h13v-2z" />
+      <path d="M25.586 20 27 21.414 23.414 25 27 28.586 25.586 30l-5-5 5-5zM11 30H3a1 1 0 0 1-.894-1.447l4-8a1.041 1.041 0 0 1 1.789 0l4 8A1 1 0 0 1 11 30Zm-6.382-2h4.764L7 23.236ZM28 12h-6a2.002 2.002 0 0 1-2-2V4a2.002 2.002 0 0 1 2-2h6a2.002 2.002 0 0 1 2 2v6a2.002 2.002 0 0 1-2 2Zm-6-8v6h6.001L28 4ZM7 12a5 5 0 1 1 5-5 5.006 5.006 0 0 1-5 5Zm0-8a3 3 0 1 0 3 3 3.003 3.003 0 0 0-3-3Z" />
+    </svg>
+  );
+}
+
 export function Calendar(props: PropsType) {
   return (
     <svg
