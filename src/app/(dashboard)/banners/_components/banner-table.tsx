@@ -10,8 +10,11 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 
-export async function BannerTable() {
-  const data = await getTopProducts();
+type bannerItems = {
+  data : any
+}
+
+export async function BannerTable({data}: bannerItems) {
 
   return (
     <div className="rounded-[10px] bg-white shadow-1 dark:bg-gray-dark dark:shadow-card">
@@ -35,23 +38,23 @@ export async function BannerTable() {
         </TableHeader>
 
         <TableBody>
-          {data.map((product) => (
+          {data.map((data) => (
             <TableRow
               className="text-base font-medium text-dark dark:text-white"
-              key={product.name + product.profit}
+              key={data._id}
             >
               <TableCell className="flex min-w-fit items-center gap-3 pl-5 sm:pl-6 xl:pl-7.5">
-                <Image
-                  src={product.image}
+                {/* <Image
+                  src={data.image}
                   className="aspect-[6/5] w-15 rounded-[5px] object-cover"
                   width={60}
                   height={50}
-                  alt={"Image for product " + product.name}
+                  alt={"Image for product " + data.name}
                   role="presentation"
-                />
-                <div>{product.name}</div>
+                /> */}
+                <div>{data.name}</div>
               </TableCell>
-              <TableCell>{product.category}</TableCell>
+              <TableCell>{data.description}</TableCell>
             </TableRow>
           ))}
         </TableBody>
