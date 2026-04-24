@@ -11,7 +11,11 @@ import Image from "next/image";
 import Link from "next/link";
 
 type bannerItems = {
-  data : any
+  data : [{
+    _id : string;
+    name : string;
+    description : string; 
+  }]
 }
 
 export async function BannerTable({data}: bannerItems) {

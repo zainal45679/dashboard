@@ -55,7 +55,6 @@ const submit = (data : Tlogin) =>{
             { label: "United Kingdom", value: "UK" },
             { label: "Canada", value: "Canada" },
           ]}
-          
         />
         {errors.catagory && ( <p className='text-red-500'> {errors.catagory.message as string} </p>)}
 

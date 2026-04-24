@@ -10,9 +10,16 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 
-export async function CatagoryTable() {
+type Props = {
+  data : [{
+    _id: string;
+    name: string;
+    image: string;
+    description: string;
+  }]
+}
 
-  const data = await getTopProducts();
+export async function CatagoryTable({data}: Props) {
 
   return (
     <div className="rounded-[10px] bg-white shadow-1 dark:bg-gray-dark dark:shadow-card">
@@ -36,24 +43,24 @@ export async function CatagoryTable() {
         </TableHeader>
 
         <TableBody>
-          {data.map((product) => (
+          {data.map((category) => (
             <TableRow
               className="text-base font-medium text-dark dark:text-white"
-              key={product.name + product.profit}
+              key={category._id}
             >
               <TableCell className="flex min-w-fit items-center gap-3 pl-5 sm:pl-6 xl:pl-7.5">
-                <Image
-                  src={product.image}
+                {/* <Image
+                  src={category.image}
                   className="aspect-[6/5] w-15 rounded-[5px] object-cover"
                   width={60}
                   height={50}
-                  alt={"Image for product " + product.name}
+                  alt={"Image for product " + category.name}
                   role="presentation"
-                />
-                <div>{product.name}</div>
+                /> */}
+                <div>{category.name}</div>
               </TableCell>
 
-              <TableCell>{product.category}</TableCell>
+              <TableCell>{category.description}</TableCell>
 
             </TableRow>
           ))}

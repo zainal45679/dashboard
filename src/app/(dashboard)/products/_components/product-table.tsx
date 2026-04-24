@@ -10,8 +10,21 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 
-export async function ProductTable() {
-  const data = await getTopProducts();
+type Props = {
+  data : [{
+    _id: string;
+    name: string;
+    image: string;
+    category: string;
+    brand: string;
+    price: number;
+    description: string;
+    brandDetails: any;
+    categoryDetails: any;
+  }]
+}
+
+export async function ProductTable({data}: Props) {
 
   return (
     <div className="rounded-[10px] bg-white shadow-1 dark:bg-gray-dark dark:shadow-card">
@@ -41,28 +54,28 @@ export async function ProductTable() {
           {data.map((product) => (
             <TableRow
               className="text-base font-medium text-dark dark:text-white"
-              key={product.name + product.profit}
+              key={product._id}
             >
               <TableCell className="flex min-w-fit items-center gap-3 pl-5 sm:pl-6 xl:pl-7.5">
-                <Image
+                {/* <Image
                   src={product.image}
                   className="aspect-[6/5] w-15 rounded-[5px] object-cover"
                   width={60}
                   height={50}
                   alt={"Image for product " + product.name}
                   role="presentation"
-                />
+                /> */}
                 <div>{product.name}</div>
               </TableCell>
 
-              <TableCell>{product.category}</TableCell>
+              <TableCell>{product.brandDetails?.name}</TableCell>
 
-              <TableCell>${product.price}</TableCell>
+              <TableCell>{product.categoryDetails?.name}</TableCell>
 
-              <TableCell>{product.sold}</TableCell>
+              <TableCell>{product.price}</TableCell>
 
               <TableCell className="pr-5 text-right text-green-light-1 sm:pr-6 xl:pr-7.5">
-                ${product.profit}
+                {product.description}
               </TableCell>
             </TableRow>
           ))}

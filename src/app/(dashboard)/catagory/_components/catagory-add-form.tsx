@@ -24,7 +24,7 @@ const submit = ( data : Tlogin ) => {
 }
 
   return (
-    <ShowcaseSection title="Contact Form" className="!p-6.5">
+    <ShowcaseSection title="Category Form" className="!p-6.5">
       <form onSubmit={handleSubmit(submit)} action="#">
         <InputGroup
           register={register("productName")}

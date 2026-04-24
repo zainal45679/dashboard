@@ -9,7 +9,6 @@ const api = async ()=> {
 const page = async () => {
 
   const banners = await api();
-  console.log(banners);
 
   return (
     <div>
