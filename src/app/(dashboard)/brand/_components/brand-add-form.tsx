@@ -1,17 +1,19 @@
 "use client"
 
+import { brandApi } from "@/api/brand-api";
 import InputGroup from "@/components/FormElements/InputGroup";
 import { TextAreaGroup } from "@/components/FormElements/InputGroup/text-area";
 import { Select } from "@/components/FormElements/select";
 import { ShowcaseSection } from "@/components/Layouts/showcase-section";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import z from "zod";
 
 export function BrandAddForm() {
 
 const brandSchema = z.object({
-  productName : z.string().min(3),
+  name : z.string().min(3),
   description : z.string().min(3)
 })
 
@@ -19,21 +21,30 @@ const { handleSubmit, register, formState : { errors }} = useForm({ resolver : z
 
 type Tlogin = z.infer<typeof brandSchema>
 
-const submit = ( data : Tlogin)=>{
-  console.log(data);
+const submit = async( data : Tlogin)=>{
+  const res = await brandApi.createBrand(data);
+  try {
+    if(res.data.success){
+      toast.success(res.data.message)
+    } else {
+      toast.error(res.data.message)
+    }
+  } catch (error) {
+    toast.error("Not created")
+  }
 }
 
   return (
     <ShowcaseSection title="Contact Form" className="!p-6.5">
       <form onSubmit={handleSubmit(submit)} action="#">
         <InputGroup
-          register={register("productName")}
+          register={register("name")}
           label="Product Name"
           type="text"
           placeholder="Enter your Product name "
           className="mb-4.5"
         />
-        {errors.productName && ( <p className='text-red-500'> {errors.productName.message as string} </p>)}
+        {errors.name && ( <p className='text-red-500'> {errors.name.message as string} </p>)}
 
         <InputGroup
           register={register("description")}

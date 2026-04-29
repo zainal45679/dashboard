@@ -68,9 +68,9 @@ export async function ProductTable({data}: Props) {
                 <div>{product.name}</div>
               </TableCell>
 
-              <TableCell>{product.brandDetails?.name}</TableCell>
+              <TableCell>{product.brandDetails[0]?.name}</TableCell>
 
-              <TableCell>{product.categoryDetails?.name}</TableCell>
+              <TableCell>{product.categoryDetails[0]?.name}</TableCell>
 
               <TableCell>{product.price}</TableCell>
 

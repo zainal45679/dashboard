@@ -6,15 +6,11 @@ import { TextAreaGroup } from "@/components/FormElements/InputGroup/text-area";
 import { Select } from "@/components/FormElements/select";
 import { ShowcaseSection } from "@/components/Layouts/showcase-section";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import z from "zod";
 
-
 export function BannerAddForm() {
-
-  const router = useRouter();
 
 const bannerSchema = z.object({
   name : z.string().min(3),
@@ -26,21 +22,19 @@ const { register, handleSubmit, formState : { errors } } = useForm ({ resolver :
 type Tlogin = z.infer<typeof bannerSchema>
 
 const submit = async (data: Tlogin) => {
+const res = await bannerApi.createBanner(data);
   try {
-    console.log(data);
-
-    const res = await bannerApi.createBanner(data);
-
     if (res.data.success) {
       toast.success(res.data.message);
-      router.push("/banners")
     } else {
       toast.error(res.data.message);
     }
   } catch (error) {
-    console.log(error);
+    console.log(error); 
+    toast.error(res.data.message);
   }
 };
+
 
   return (
     <ShowcaseSection title="Contact Form" className="!p-6.5">
