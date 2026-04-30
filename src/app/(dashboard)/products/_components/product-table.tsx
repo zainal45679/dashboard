@@ -32,7 +32,7 @@ export async function ProductTable({data}: Props) {
         <h2 className="text-2xl font-bold text-dark dark:text-white">
           Top Products
         </h2>
-        <Link href="/products/add" className="dark:bg-white px-3 py-1 dark:text-dark font-bold rounded-lg">
+        <Link href="/products/add" className="dark:bg-white px-3 py-1 dark:text-dark font-bold  bg-primary text-white rounded-lg">
             ADD
         </Link>
       </div>

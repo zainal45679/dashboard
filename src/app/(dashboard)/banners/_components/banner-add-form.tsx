@@ -6,11 +6,14 @@ import { TextAreaGroup } from "@/components/FormElements/InputGroup/text-area";
 import { Select } from "@/components/FormElements/select";
 import { ShowcaseSection } from "@/components/Layouts/showcase-section";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import z from "zod";
 
 export function BannerAddForm() {
+
+const router = useRouter()
 
 const bannerSchema = z.object({
   name : z.string().min(3),
@@ -26,6 +29,7 @@ const res = await bannerApi.createBanner(data);
   try {
     if (res.data.success) {
       toast.success(res.data.message);
+      router.push("/banners")
     } else {
       toast.error(res.data.message);
     }
@@ -37,14 +41,14 @@ const res = await bannerApi.createBanner(data);
 
 
   return (
-    <ShowcaseSection title="Contact Form" className="!p-6.5">
+    <ShowcaseSection title="Banner Form" className="!p-6.5">
       <form onSubmit={handleSubmit(submit)} action="#">
 
         <InputGroup
           register={register("name")}
-          label="Product Name"
+          label="Banner Name"
           type="text"
-          placeholder="Enter your Product name "
+          placeholder="Enter your banner name "
           className="mb-4.5"
         />
         {errors.name && ( <p className='text-red-500'> {errors.name.message as string} </p>)}
@@ -53,7 +57,7 @@ const res = await bannerApi.createBanner(data);
           register={register("description")}
           label="Description"
           type="text"
-          placeholder="Enter your product description"
+          placeholder="Enter your banner description"
           className="mb-4.5"
         />
         {errors.description && ( <p className='text-red-500'> {errors.description.message as string} </p>)}

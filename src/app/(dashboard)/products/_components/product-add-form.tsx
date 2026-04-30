@@ -15,39 +15,21 @@ import { brandApi } from "@/api/brand-api";
 import { useEffect, useState } from "react";
 import { categoryApi } from "@/api/category-api";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
-export function ProductAddForm() {
+type Props = {
+  brands : any,
+  categories : any
+}
 
-const [brand, setBrand] = useState([]);
-const [category, setCategory] = useState([]);
+export function ProductAddForm({brands, categories}: Props) {
 
-useEffect(()=>{
-  const fetchBrand = async () =>{
-    const res = await brandApi.getAllBrands()
-    setBrand(res.data.data.brands)
-  }
-  const fetchCategory = async () => {
-    const res = await categoryApi.getAllCategory()
-    setCategory(res.data.data.categories)
-  }
-  fetchBrand()
-  fetchCategory()
-},[])
-
-const brandOptions = brand.map((b) => ({
-  label: b.name,
-  value: b._id,
-}));
-
-const categoryOptions = category.map((c) => ({
-  label: c.name,
-  value: c._id,
-}));
+const router = useRouter()
 
 const productSchema = z
   .object({
     name: z.string().min(3),
-    category: z.string().nonempty({ message : "Select any one catagory"}),
+    category: z.string().nonempty({ message : "Select any one Category"}),
     brand: z.string().nonempty({ message : "Select any Brand"}),
     price: z.string(),
     description: z.string().min(10)
@@ -63,6 +45,7 @@ const submit = async(data : Tlogin) =>{
     console.log(res);
     if (res.data.message) {
       toast.success(res.data.message)
+      router.push("/products")
     } else {
       toast.error(res.data.message)
     }
@@ -72,14 +55,14 @@ const submit = async(data : Tlogin) =>{
 }
 
   return (
-    <ShowcaseSection title="Contact Form" className="!p-6.5">
+    <ShowcaseSection title="Product Form" className="!p-6.5">
       <form onSubmit={handleSubmit(submit)} action="#">
 
         <InputGroup
           register = {register("name")}
           label="Product Name"
           type="text"
-          placeholder="Enter your Product Name"
+          placeholder="Enter your product name"
           className="mb-4.5"
           required
         />
@@ -87,10 +70,13 @@ const submit = async(data : Tlogin) =>{
 
         <Select
           register={(register("category"))}
-          label="Catagory"
-          placeholder="Select the Catagory"
+          label="Category"
+          placeholder="Select the Category"
           className="mb-4.5"
-          items={categoryOptions}
+          items={categories.map((c: any)=>({
+            label : c.name,
+            value : c._id
+          }))}
         />
         {errors.category && ( <p className='text-red-500'> {errors.category.message as string} </p>)}
 
@@ -99,7 +85,10 @@ const submit = async(data : Tlogin) =>{
           label="Brand"
           placeholder="Select your subject"
           className="mb-4.5"
-          items={brandOptions}
+          items={brands.map((b: any)=>({
+            label : b.name,
+            value : b._id
+          }))}
         />
         {errors.brand && ( <p className='text-red-500'> {errors.brand.message as string} </p>)}
 

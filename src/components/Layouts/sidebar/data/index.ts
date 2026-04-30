@@ -19,18 +19,8 @@ export const NAV_DATA = [
         icon: Icons.Brand,
       },
       {
-        title: "Catagory",
+        title: "Category",
         icon: Icons.Catogory,
-      },
-      {
-        title: "Dashboard",
-        icon: Icons.HomeIcon,
-        items: [
-          {
-            title: "eCommerce",
-            url: "/",
-          },
-        ],
       },
       {
         title: "Forms",

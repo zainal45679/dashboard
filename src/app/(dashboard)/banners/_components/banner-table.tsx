@@ -24,9 +24,9 @@ export async function BannerTable({data}: bannerItems) {
     <div className="rounded-[10px] bg-white shadow-1 dark:bg-gray-dark dark:shadow-card">
       <div className="px-6 py-4 sm:px-7 sm:py-5 xl:px-8.5 flex w-full justify-between items-start">
         <h2 className="text-2xl font-bold text-dark dark:text-white">
-          Top Products
+          Top Banners
         </h2>
-        <Link href="/banners/add" className="dark:bg-white px-3 py-1 dark:text-dark font-bold rounded-lg">
+        <Link href="/banners/add" className="dark:bg-white px-3 py-1 dark:text-dark bg-primary text-white font-bold rounded-lg">
             ADD
         </Link>
       </div>
@@ -35,7 +35,7 @@ export async function BannerTable({data}: bannerItems) {
         <TableHeader>
           <TableRow className="border-t text-base [&>th]:h-auto [&>th]:py-3 sm:[&>th]:py-4.5">
             <TableHead className="min-w-[120px] pl-5 sm:pl-6 xl:pl-7.5">
-              Product Name
+              Banner Name
             </TableHead>
             <TableHead>Description</TableHead>
           </TableRow>

@@ -6,11 +6,14 @@ import { TextAreaGroup } from "@/components/FormElements/InputGroup/text-area";
 import { Select } from "@/components/FormElements/select";
 import { ShowcaseSection } from "@/components/Layouts/showcase-section";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import z from "zod";
 
 export function BrandAddForm() {
+
+const router = useRouter()
 
 const brandSchema = z.object({
   name : z.string().min(3),
@@ -26,6 +29,7 @@ const submit = async( data : Tlogin)=>{
   try {
     if(res.data.success){
       toast.success(res.data.message)
+      router.push("/brand")
     } else {
       toast.error(res.data.message)
     }
@@ -35,13 +39,13 @@ const submit = async( data : Tlogin)=>{
 }
 
   return (
-    <ShowcaseSection title="Contact Form" className="!p-6.5">
+    <ShowcaseSection title="Brand Form" className="!p-6.5">
       <form onSubmit={handleSubmit(submit)} action="#">
         <InputGroup
           register={register("name")}
-          label="Product Name"
+          label="Brand Name"
           type="text"
-          placeholder="Enter your Product name "
+          placeholder="Enter your brand name "
           className="mb-4.5"
         />
         {errors.name && ( <p className='text-red-500'> {errors.name.message as string} </p>)}
@@ -50,7 +54,7 @@ const submit = async( data : Tlogin)=>{
           register={register("description")}
           label="Description"
           type="text"
-          placeholder="Enter your product description"
+          placeholder="Enter your brand description"
           className="mb-4.5"
         />
         {errors.description && ( <p className='text-red-500'> {errors.description.message as string} </p>)}

@@ -6,26 +6,30 @@ import { TextAreaGroup } from "@/components/FormElements/InputGroup/text-area";
 import { Select } from "@/components/FormElements/select";
 import { ShowcaseSection } from "@/components/Layouts/showcase-section";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import z from "zod";
 
-export function CatagoryAddForm() {
+export function CategoryAddForm() {
 
-const catagorySchema = z.object({
+const router = useRouter()
+
+const categorySchema = z.object({
   name : z.string().min(3),
   description : z.string().min(10)
 })
 
-const { register, handleSubmit, formState : {errors} } = useForm({resolver : zodResolver(catagorySchema)})
+const { register, handleSubmit, formState : {errors} } = useForm({resolver : zodResolver(categorySchema)})
 
-type Tlogin = z.infer<typeof catagorySchema>
+type Tlogin = z.infer<typeof categorySchema>
 
 const submit = async ( data : Tlogin ) => {
-  const res = await categoryApi.createCategory(data);
   try {
+    const res = await categoryApi.createCategory(data);
     if (res.data.success) {
       toast.success(res.data.message)
+      router.push("/category");
     } else {
       toast.error(res.data.message)
     }
@@ -39,9 +43,9 @@ const submit = async ( data : Tlogin ) => {
       <form onSubmit={handleSubmit(submit)} action="#">
         <InputGroup
           register={register("name")}
-          label="Product Name"
+          label="Category Name"
           type="text"
-          placeholder="Enter your Product name "
+          placeholder="Enter your category name "
           className="mb-4.5"
         />
         {errors.name && ( <p className='text-red-500'> {errors.name.message as string} </p>)}
@@ -50,7 +54,7 @@ const submit = async ( data : Tlogin ) => {
           register={register("description")}
           label="Description"
           type="text"
-          placeholder="Enter your product description"
+          placeholder="Enter your category description"
           className="mb-4.5"
         />
         {errors.description && ( <p className='text-red-500'> {errors.description.message as string} </p>)}

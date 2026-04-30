@@ -1,6 +1,7 @@
 import React from 'react'
-import { CatagoryTable } from './_components/catagory-table'
+
 import { categoryApi } from '@/api/category-api'
+import { CategoryTable } from './_components/category-table'
 
 const api = async()=>{
   const response = await categoryApi.getAllCategory()
@@ -14,7 +15,7 @@ const page = async() => {
 
   return (
     <div>
-      <CatagoryTable data={data}/>
+      <CategoryTable data={data}/>
     </div>
   )
 }
