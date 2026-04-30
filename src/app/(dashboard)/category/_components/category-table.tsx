@@ -1,3 +1,4 @@
+"use client"
 import { getTopProducts } from "@/components/Tables/fetch";
 import {
   Table,
@@ -9,6 +10,11 @@ import {
 } from "@/components/ui/table";
 import Image from "next/image";
 import Link from "next/link";
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { categoryApi } from "@/api/category-api";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 type Props = {
   data : [{
@@ -19,7 +25,23 @@ type Props = {
   }]
 }
 
-export async function CategoryTable({data}: Props) {
+export function CategoryTable({data}: Props) {
+
+  const router = useRouter()
+
+  const handleDelete = async(id : string) => {
+    const res = await categoryApi.deleteCategory(id)
+    try {
+      if (res.data.success) {
+        toast.success(res.data.message)
+        router.push("/category")
+      } else {
+        toast.error(res.data.message)
+      }
+    } catch (error) {
+      toast.error("Server Error")
+    }
+  }
 
   return (
     <div className="rounded-[10px] bg-white shadow-1 dark:bg-gray-dark dark:shadow-card">
@@ -39,6 +61,8 @@ export async function CategoryTable({data}: Props) {
               Category Name
             </TableHead>
             <TableHead>Description</TableHead>
+            <TableHead>Edit</TableHead>
+            <TableHead>Delete</TableHead>
           </TableRow>
         </TableHeader>
 
@@ -61,6 +85,11 @@ export async function CategoryTable({data}: Props) {
               </TableCell>
 
               <TableCell>{category.description}</TableCell>
+
+              <TableCell><Link href={`/category/${category._id}`}><EditIcon/></Link></TableCell>
+
+              <TableCell><DeleteIcon onClick={()=>{handleDelete(category._id)}}/></TableCell>
+
 
             </TableRow>
           ))}

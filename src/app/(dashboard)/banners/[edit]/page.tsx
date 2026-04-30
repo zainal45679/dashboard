@@ -4,15 +4,19 @@ import { bannerApi } from '@/api/banner-api'
 
 
 const api = async (id: string) => {
-  return await bannerApi.getOneBanner(id)
+  const response = await bannerApi.getOneBanner(id)
+  return response.data.data.banner[0]
 }
 
-const page = async() => {
+const page = async({params}: { params : Promise<{ edit: string}>}) => {
 
-  const response = await api()
+  const { edit : id } = await params
+  
+  const data = await api(id)
+  console.log(data);
 
   return (
-    <BannerEditForm/>
+    <BannerEditForm data={data}/>
   )
 }
 

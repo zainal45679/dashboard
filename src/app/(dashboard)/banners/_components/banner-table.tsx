@@ -1,3 +1,4 @@
+"use client"
 import { getTopProducts } from "@/components/Tables/fetch";
 import {
   Table,
@@ -11,6 +12,9 @@ import Image from "next/image";
 import Link from "next/link";
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { bannerApi } from "@/api/banner-api";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 type bannerItems = {
   data : [{
@@ -20,7 +24,23 @@ type bannerItems = {
   }]
 }
 
-export async function BannerTable({data}: bannerItems) {
+export function BannerTable({data}: bannerItems) {
+
+  const router = useRouter()
+  const api = async (_id: string)=>{
+    const res = await bannerApi.deleteBanner(_id)
+    try {
+      if (res.data.success) {
+        toast.success(res.data.message);
+        router.push("/banners")
+      } else {
+        toast.error(res.data.message);
+      }
+    } catch (error) {
+      console.log(error); 
+      toast.error(res.data.message);
+    }
+  }
 
   return (
     <div className="rounded-[10px] bg-white shadow-1 dark:bg-gray-dark dark:shadow-card">
@@ -63,8 +83,8 @@ export async function BannerTable({data}: bannerItems) {
                 <div>{data.name}</div>
               </TableCell>
               <TableCell>{data.description}</TableCell>
-              <TableCell><Link href="/banners/edit"><EditIcon/></Link></TableCell>
-              <TableCell><DeleteIcon/></TableCell>
+              <TableCell><Link href={`/banners/${data._id}`}><EditIcon/></Link></TableCell>
+              <TableCell><DeleteIcon onClick={() => api(data._id)}/></TableCell>
             </TableRow>
           ))}
         </TableBody>

@@ -1,3 +1,4 @@
+"use client"
 import { getTopProducts } from "@/components/Tables/fetch";
 import {
   Table,
@@ -9,6 +10,11 @@ import {
 } from "@/components/ui/table";
 import Image from "next/image";
 import Link from "next/link";
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { productApi } from "@/api/product-api";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 type Props = {
   data : [{
@@ -24,7 +30,25 @@ type Props = {
   }]
 }
 
-export async function ProductTable({data}: Props) {
+
+
+export function ProductTable({data}: Props) {
+
+  const router = useRouter()
+
+  const handleDelete = async(id: string) => {
+    const res = await productApi.deleteProduct(id)
+    try{
+      if (res.data.message) {
+        toast.success(res.data.message)
+        router.push("/products")
+      } else {
+        toast.error(res.data.message)
+      }
+    } catch (error) {
+      toast.error("Server error")
+    }
+  }
 
   return (
     <div className="rounded-[10px] bg-white shadow-1 dark:bg-gray-dark dark:shadow-card">
@@ -47,6 +71,8 @@ export async function ProductTable({data}: Props) {
             <TableHead>Brand</TableHead>
             <TableHead>Price</TableHead>
             <TableHead>Description</TableHead>
+            <TableHead>Edit</TableHead>
+            <TableHead>Delete</TableHead>
           </TableRow>
         </TableHeader>
 
@@ -74,9 +100,12 @@ export async function ProductTable({data}: Props) {
 
               <TableCell>{product.price}</TableCell>
 
-              <TableCell className="pr-5 text-right text-green-light-1 sm:pr-6 xl:pr-7.5">
+
+              <TableCell className="pr-5 sm:pr-6 xl:pr-7.5">
                 {product.description}
               </TableCell>
+              <TableCell><Link href={`products/${product._id}`}><EditIcon/></Link></TableCell>
+              <TableCell><DeleteIcon onClick={() => handleDelete(product._id)}/></TableCell>
             </TableRow>
           ))}
         </TableBody>

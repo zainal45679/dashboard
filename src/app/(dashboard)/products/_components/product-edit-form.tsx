@@ -5,6 +5,7 @@ import { TextAreaGroup } from "@/components/FormElements/InputGroup/text-area";
 import { Select } from "@/components/FormElements/select";
 import { ShowcaseSection } from "@/components/Layouts/showcase-section";
 import { error } from "console";
+import { register } from "module";
 import { useForm } from "react-hook-form";
 import z, { array } from 'zod'
 import { Schema } from "zod/v3";
@@ -18,7 +19,15 @@ import { useRouter } from "next/navigation";
 
 type Props = {
   brands : any,
-  categories : any
+  categories : any,
+  data:{
+    _id : string,
+    name : string,
+    category : string,
+    brand : string,
+    price : string,
+    description :string,
+  }
 }
 
 const productSchema = z
@@ -26,23 +35,40 @@ const productSchema = z
     name: z.string().min(3),
     category: z.string().nonempty({ message : "Select any one Category"}),
     brand: z.string().nonempty({ message : "Select any Brand"}),
-    price: z.string(),
+    price: z.coerce.number(),
     description: z.string().min(10)
+  })
+
+export type Tlogin = z.infer<typeof productSchema>
+
+export function ProductEditForm({brands, categories, data}: Props) {
+
+const router = useRouter()
+
+const { 
+  register, 
+  handleSubmit, 
+  formState : { errors } 
+} 
+= useForm (
+  { 
+    resolver : zodResolver(productSchema),
+    defaultValues : {
+      name : data?.name,
+      category : data?.category,
+      brand : data?.brand,
+      price : data?.price,
+      description : data?.description
+    }
   })
 
 
 
-export type Tlogin = z.infer<typeof productSchema>
-
-export function ProductAddForm({brands, categories}: Props) {
-
-const { register, handleSubmit, formState : { errors } } = useForm ({ resolver : zodResolver(productSchema) })
-
-const router = useRouter()
+const id = data?._id
 
 const submit = async(data : Tlogin) =>{
   try {
-    const res = await productApi.createProduct(data);
+    const res = await productApi.updateProduct(id, data);
     console.log(res);
     if (res.data.message) {
       toast.success(res.data.message)
@@ -57,7 +83,7 @@ const submit = async(data : Tlogin) =>{
 
   return (
     <ShowcaseSection title="Product Form" className="!p-6.5">
-      <form onSubmit={handleSubmit(submit)} action="#">
+      <form key={data?._id} onSubmit={handleSubmit(submit)} action="#">
 
         <InputGroup
           register = {register("name")}
@@ -112,7 +138,7 @@ const submit = async(data : Tlogin) =>{
         {errors.description && ( <p className='text-red-500'> {errors.description.message as string} </p>)}
 
         <button className="mt-6 flex w-full justify-center rounded-lg bg-primary p-[13px] font-medium text-white hover:bg-opacity-90">
-          ADD
+          UPDATE
         </button>
       </form>
     </ShowcaseSection>

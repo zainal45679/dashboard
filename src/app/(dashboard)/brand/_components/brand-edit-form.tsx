@@ -1,6 +1,6 @@
 "use client"
 
-import { bannerApi } from "@/api/banner-api";
+import { brandApi } from "@/api/brand-api";
 import InputGroup from "@/components/FormElements/InputGroup";
 import { TextAreaGroup } from "@/components/FormElements/InputGroup/text-area";
 import { Select } from "@/components/FormElements/select";
@@ -11,53 +11,63 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import z from "zod";
 
+type Props = {
+  data : {
+    _id : string,
+    name : string,
+    description : string
+  }
+}
 
+const brandSchema = z.object({
+  name : z.string().min(3),
+  description : z.string().min(3)
+})
 
-export function BannerAddForm() {
+export type Tlogin = z.infer<typeof brandSchema>
+
+export function BrandEditForm({data} : Props){
 
 const router = useRouter()
 
-const bannerSchema = z.object({
-  name : z.string().min(3),
-  description : z.string().min(10)
-})
 
 const { 
-  register, 
   handleSubmit, 
-  formState : { errors } } 
-  = useForm (
-    { resolver : zodResolver(bannerSchema)},
-    
-  )
+  register, 
+  formState : { errors }} 
+  = useForm({ 
+    resolver : zodResolver(brandSchema),
+    defaultValues : {
+      name : data.name,
+      description : data.description
+    }
+   })
 
-type Tlogin = z.infer<typeof bannerSchema>
 
-const submit = async (data: Tlogin) => {
-const res = await bannerApi.createBanner(data);
+const id = data._id
+
+const submit = async( data : Tlogin)=>{
+  const res = await brandApi.updateBrand(data, id);
   try {
-    if (res.data.success) {
-      toast.success(res.data.message);
-      router.push("/banners")
+    if(res.data.success){
+      toast.success(res.data.message)
+      router.push("/brand")
     } else {
-      toast.error(res.data.message);
+      toast.error(res.data.message)
     }
   } catch (error) {
-    console.log(error); 
-    toast.error(res.data.message);
+    toast.error("Not created")
   }
-};
-
+}
 
   return (
-    <ShowcaseSection title="Banner Form" className="!p-6.5">
+    <ShowcaseSection title="Brand Edit Form" className="!p-6.5">
       <form onSubmit={handleSubmit(submit)} action="#">
-
         <InputGroup
           register={register("name")}
-          label="Banner Name"
+          label="Brand Name"
           type="text"
-          placeholder="Enter your banner name "
+          placeholder="Enter your brand name "
           className="mb-4.5"
         />
         {errors.name && ( <p className='text-red-500'> {errors.name.message as string} </p>)}
@@ -66,7 +76,7 @@ const res = await bannerApi.createBanner(data);
           register={register("description")}
           label="Description"
           type="text"
-          placeholder="Enter your banner description"
+          placeholder="Enter your brand description"
           className="mb-4.5"
         />
         {errors.description && ( <p className='text-red-500'> {errors.description.message as string} </p>)}
@@ -74,6 +84,7 @@ const res = await bannerApi.createBanner(data);
         <button className="mt-6 flex w-full justify-center rounded-lg bg-primary p-[13px] font-medium text-white hover:bg-opacity-90">
           ADD
         </button>
+
       </form>
     </ShowcaseSection>
   );

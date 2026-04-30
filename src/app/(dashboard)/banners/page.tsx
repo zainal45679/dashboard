@@ -5,7 +5,6 @@ const api = async ()=> {
   const response = await bannerApi.getAllBanner()
   return response.data.data.banners
 }
-
 const page = async () => {
 
   const banners = await api();

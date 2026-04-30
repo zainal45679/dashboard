@@ -11,21 +11,30 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import z from "zod";
 
-export function BannerEditForm() {
-
+export function BannerEditForm({ data }: { data: { _id:string; name: string; description: string } }) {
 const router = useRouter()
 
 const bannerSchema = z.object({
   name : z.string().min(3),
-  description : z.string().min(10)
+  description : z.string().min(10),
 })
 
-const { register, handleSubmit, formState : { errors } } = useForm ({ resolver : zodResolver(bannerSchema) })
+const { 
+  register, 
+  handleSubmit, 
+  formState : { errors } } = useForm ({ resolver : zodResolver(bannerSchema), defaultValues : {
+        name : data.name,
+        description : data.description
+      } })
 
 type Tlogin = z.infer<typeof bannerSchema>
+const id = data._id
+
 
 const submit = async (data: Tlogin) => {
-const res = await bannerApi.createBanner(data);
+
+const res = await bannerApi.updateBanner(data, id);
+console.log(data);
   try {
     if (res.data.success) {
       toast.success(res.data.message);
@@ -63,7 +72,7 @@ const res = await bannerApi.createBanner(data);
         {errors.description && ( <p className='text-red-500'> {errors.description.message as string} </p>)}
 
         <button className="mt-6 flex w-full justify-center rounded-lg bg-primary p-[13px] font-medium text-white hover:bg-opacity-90">
-          ADD
+          UPDATE
         </button>
       </form>
     </ShowcaseSection>

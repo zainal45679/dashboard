@@ -9,5 +9,11 @@ export const bannerApi = {
     },
     getOneBanner: async (id: string) => {
         return await axiosConfig.get(`banner/view-one/${id}`)
+    },
+    updateBanner: async (body: object, id: string) => {
+        return await axiosConfig.put(`banner/update/${id}`, body)
+    },
+    deleteBanner: async (id: string) =>{
+        return await axiosConfig.post(`banner/delete/${id}`)
     }
 }
