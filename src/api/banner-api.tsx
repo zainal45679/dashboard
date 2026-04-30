@@ -6,5 +6,8 @@ export const bannerApi = {
     },
     createBanner: async (body: object) => {
         return await axiosConfig.post("banner/create", body)
+    },
+    getOneBanner: async (id: string) => {
+        return await axiosConfig.get(`banner/view-one/${id}`)
     }
 }
