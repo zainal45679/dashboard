@@ -9,6 +9,8 @@ import {
 } from "@/components/ui/table";
 import Image from "next/image";
 import Link from "next/link";
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 type bannerItems = {
   data : [{
@@ -38,6 +40,8 @@ export async function BannerTable({data}: bannerItems) {
               Banner Name
             </TableHead>
             <TableHead>Description</TableHead>
+            <TableHead>Edit</TableHead>
+            <TableHead>Delete</TableHead>
           </TableRow>
         </TableHeader>
 
@@ -59,6 +63,8 @@ export async function BannerTable({data}: bannerItems) {
                 <div>{data.name}</div>
               </TableCell>
               <TableCell>{data.description}</TableCell>
+              <TableCell><Link href="/banners/edit"><EditIcon/></Link></TableCell>
+              <TableCell><DeleteIcon/></TableCell>
             </TableRow>
           ))}
         </TableBody>

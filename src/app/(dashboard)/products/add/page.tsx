@@ -12,7 +12,6 @@ const fetch = async ()=>{
     brands: brands.data.data.brands,
     categories: categories.data.data.categories,
   }
-
   return object
 }
 
