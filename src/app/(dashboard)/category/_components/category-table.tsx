@@ -34,7 +34,7 @@ export function CategoryTable({data}: Props) {
     try {
       if (res.data.success) {
         toast.success(res.data.message)
-        router.push("/category")
+        router.refresh()
       } else {
         toast.error(res.data.message)
       }
@@ -50,7 +50,7 @@ export function CategoryTable({data}: Props) {
           Top Categories
         </h2>
         <Link href="/category/add" className="dark:bg-white px-3 py-1 dark:text-dark  bg-primary text-white font-bold rounded-lg">
-            ADD
+          ADD
         </Link>
       </div>
 

@@ -15,6 +15,9 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { bannerApi } from "@/api/banner-api";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import IconButton from "@mui/material/IconButton";
+import AlertDialog from "../../ui-elements/confirm/page";
+import { useState } from "react";
 
 type bannerItems = {
   data : [{
@@ -41,6 +44,9 @@ export function BannerTable({data}: bannerItems) {
       toast.error(res.data.message);
     }
   }
+
+  const [open, setOpen] = useState(false)
+  const [deleteId, setDeleteId] = useState(""); // MINIMAL CHANGE: Track the ID
 
   return (
     <div className="rounded-[10px] bg-white shadow-1 dark:bg-gray-dark dark:shadow-card">
@@ -84,11 +90,19 @@ export function BannerTable({data}: bannerItems) {
               </TableCell>
               <TableCell>{data.description}</TableCell>
               <TableCell><Link href={`/banners/${data._id}`}><EditIcon/></Link></TableCell>
-              <TableCell><DeleteIcon onClick={() => api(data._id)}/></TableCell>
+              <TableCell>
+                <DeleteIcon onClick={() => { setDeleteId(data._id); setOpen(true); }} />
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
       </Table>
+
+      <AlertDialog
+        open={open}
+        setOpen={setOpen}
+        onConfirm={() => { api(deleteId); setOpen(false); }}
+      />
     </div>
   );
 }
