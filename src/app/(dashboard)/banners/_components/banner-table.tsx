@@ -46,7 +46,7 @@ export function BannerTable({data}: bannerItems) {
   }
 
   const [open, setOpen] = useState(false)
-  const [deleteId, setDeleteId] = useState(""); // MINIMAL CHANGE: Track the ID
+  const [deleteId, setDeleteId] = useState("");
 
   return (
     <div className="rounded-[10px] bg-white shadow-1 dark:bg-gray-dark dark:shadow-card">

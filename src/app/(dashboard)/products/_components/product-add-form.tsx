@@ -21,14 +21,13 @@ type Props = {
   categories : any
 }
 
-const productSchema = z
-  .object({
-    name: z.string().min(3),
-    category: z.string().nonempty({ message : "Select any one Category"}),
-    brand: z.string().nonempty({ message : "Select any Brand"}),
-    price: z.string(),
-    description: z.string().min(10)
-  })
+const productSchema = z.object({
+  name: z.string(),
+  category: z.string(),
+  brand: z.string(),
+  price: z.coerce.number().min(1, "Price is required"), 
+  description: z.string(),
+})
 
 
 
@@ -72,7 +71,7 @@ const submit = async(data : Tlogin) =>{
         <Select
           register={(register("category"))}
           label="Category"
-          placeholder="Select the Category"
+          placeholder="Select the category"
           className="mb-4.5"
           items={categories.map((c: any)=>({
             label : c.name,
@@ -84,7 +83,7 @@ const submit = async(data : Tlogin) =>{
         <Select
           register={(register("brand"))}
           label="Brand"
-          placeholder="Select your subject"
+          placeholder="Select your brand"
           className="mb-4.5"
           items={brands.map((b: any)=>({
             label : b.name,

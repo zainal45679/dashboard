@@ -15,6 +15,8 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { productApi } from "@/api/product-api";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import AlertDialog from "../../ui-elements/confirm/page";
+import { useState } from "react";
 
 type Props = {
   data : [{
@@ -49,6 +51,9 @@ export function ProductTable({data}: Props) {
       toast.error("Server error")
     }
   }
+
+  const [open, setOpen] = useState(false);
+  const [deleteId, setDeleteId] = useState("");
 
   return (
     <div className="rounded-[10px] bg-white shadow-1 dark:bg-gray-dark dark:shadow-card">
@@ -105,11 +110,16 @@ export function ProductTable({data}: Props) {
                 {product.description}
               </TableCell>
               <TableCell><Link href={`products/${product._id}`}><EditIcon/></Link></TableCell>
-              <TableCell><DeleteIcon onClick={() => handleDelete(product._id)}/></TableCell>
+              <TableCell><DeleteIcon onClick={() => {setDeleteId(product._id); setOpen(true)}}/></TableCell>
             </TableRow>
           ))}
         </TableBody>
       </Table>
+      <AlertDialog
+        open={open}
+        setOpen={setOpen}
+        onConfirm={() => { handleDelete(deleteId); setOpen(false); }}
+      />
     </div>
   );
 }
