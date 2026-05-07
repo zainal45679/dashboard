@@ -14,12 +14,15 @@ const fetch = async ()=>{
     brands: brands.data.data.brands,
     categories: categories.data.data.categories,
   }
+  console.log(object);
   return object
 }
 
 const getOne = async (id: string)=>{
     const res = await productApi.getOneProduct(id)
+    console.log(res.data.data.product[0]);
     return res.data.data.product[0]
+    
 }
 
 const page = async ({ params } : { params : Promise<{edit: string}>}) => {
