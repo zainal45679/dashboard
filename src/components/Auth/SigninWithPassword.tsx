@@ -9,6 +9,8 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { authApi } from "@/api/auth-api";
 import { zodResolver } from "@hookform/resolvers/zod";
+import Cookie from "js-cookie"
+
 
 const loginSchema = z.object({
   email: z.string().email({ message: "Please enter a valid email" }),
@@ -28,21 +30,23 @@ export default function SigninWithPassword() {
     )
 
 
-    const router = useRouter()
-    const submit = async (data: Tlogin) => {
-    const res = await authApi.loginUser(data);
-      try {
-        if (res.data.success) {
-          toast.success(res.data.message);
-          router.push("/")
-          console.log(res);
-        } else {
-          toast.error(res.data.message);
-        }
-      } catch (error) {
-        console.log(error); 
+  const router = useRouter()
+  const submit = async (data: Tlogin) => {
+  const res = await authApi.loginUser(data);
+    try {
+      if (res.data.success) {
+        toast.success(res.data.message);
+        localStorage.setItem("accessToken", res.data.data.accessToken )
+        Cookie.set("accessToken", res.data.data.accessToken)
+        router.push("/")
+        console.log(res);
+      } else {
         toast.error(res.data.message);
       }
+    } catch (error) {
+      console.log(error); 
+      toast.error(res.data.message);
+    }
 };
 
   return (
