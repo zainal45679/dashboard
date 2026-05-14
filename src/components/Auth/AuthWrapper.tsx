@@ -2,7 +2,7 @@
 import { usePathname, useRouter } from "next/navigation";
 import React, { PropsWithChildren } from "react";
 
-const AuthWrapper = ({ children }: { children: PropsWithChildren }) => {
+const AuthWrapper = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
   const pathname = usePathname();
 
