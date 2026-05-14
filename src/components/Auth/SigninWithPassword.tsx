@@ -31,7 +31,7 @@ export default function SigninWithPassword() {
 
 
   const router = useRouter()
-  const submit = async (data: Tlogin) => {
+  const submit = async (data: any) => {
   const res = await authApi.loginUser(data);
     try {
       if (res.data.success) {

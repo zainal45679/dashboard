@@ -1,10 +1,12 @@
 import { Sidebar } from "@/components/Layouts/sidebar";
 import { Header } from "@/components/Layouts/header";
 import type { PropsWithChildren } from "react";
+import AuthWrapper from "@/components/Auth/AuthWrapper";
 
 export default function RootLayout({ children }: PropsWithChildren) {
   return (
     <div className="flex min-h-screen">
+      <AuthWrapper>
       <Sidebar />
 
       <div className="w-full bg-gray-2 dark:bg-[#020d1a]">
@@ -14,6 +16,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
           {children}
         </main>
       </div>
+      </AuthWrapper>
     </div>
   );
 }
