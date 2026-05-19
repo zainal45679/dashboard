@@ -64,6 +64,7 @@ export function BannerTable({data}: bannerItems) {
       <Table>
         <TableHeader>
           <TableRow className="border-t text-base [&>th]:h-auto [&>th]:py-3 sm:[&>th]:py-4.5">
+            <TableHead>Image</TableHead>
             <TableHead className="min-w-[120px] pl-5 sm:pl-6 xl:pl-7.5">
               Banner Name
             </TableHead>
@@ -88,8 +89,8 @@ export function BannerTable({data}: bannerItems) {
                   alt={"Image for product " + data.name}
                   role="presentation"
                 />
-                <div>{data.name}</div>
               </TableCell>
+              <TableCell>{data.name}</TableCell>
               <TableCell>{data.description}</TableCell>
               <TableCell><Link href={`/banners/${data._id}`}><EditIcon/></Link></TableCell>
               <TableCell>

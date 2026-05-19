@@ -17,6 +17,7 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import AlertDialog from "../../ui-elements/confirm/page";
 import { useState } from "react";
+import { storageUrl } from "@/utils/base-url";
 
 type Props = {
   data : [{
@@ -62,6 +63,7 @@ export function CategoryTable({data}: Props) {
       <Table>
         <TableHeader>
           <TableRow className="border-t text-base [&>th]:h-auto [&>th]:py-3 sm:[&>th]:py-4.5">
+            <TableHead>Category Image</TableHead>
             <TableHead className="min-w-[120px] pl-5 sm:pl-6 xl:pl-7.5">
               Category Name
             </TableHead>
@@ -78,16 +80,16 @@ export function CategoryTable({data}: Props) {
               key={category._id}
             >
               <TableCell className="flex min-w-fit items-center gap-3 pl-5 sm:pl-6 xl:pl-7.5">
-                {/* <Image
-                  src={category.image}
+                <Image
+                  src={storageUrl + category.image}
                   className="aspect-[6/5] w-15 rounded-[5px] object-cover"
                   width={60}
                   height={50}
                   alt={"Image for product " + category.name}
                   role="presentation"
-                /> */}
-                <div>{category.name}</div>
+                />
               </TableCell>
+              <TableCell>{category.name}</TableCell>
 
               <TableCell>{category.description}</TableCell>
 

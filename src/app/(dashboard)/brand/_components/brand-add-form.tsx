@@ -38,7 +38,7 @@ const brandSchema = z.object({
       ),
 })
 
-const { handleSubmit, register, formState : { errors }, control,} = useForm({ resolver : zodResolver(brandSchema) })
+const { handleSubmit, register, formState : { errors }, control} = useForm({ resolver : zodResolver(brandSchema) })
 
 type Tlogin = z.infer<typeof brandSchema>
 
@@ -107,7 +107,6 @@ const submit = async( data : Tlogin)=>{
         <button className="mt-6 flex w-full justify-center rounded-lg bg-primary p-[13px] font-medium text-white hover:bg-opacity-90">
           ADD
         </button>
-
       </form>
     </ShowcaseSection>
   );

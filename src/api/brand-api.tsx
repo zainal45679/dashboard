@@ -11,7 +11,9 @@ export const brandApi = {
         })
     },
     updateBrand : async (body : object , id : string) => {
-        return await axiosConfig.put(`/brand/update/${id}`, body)
+        return await axiosConfig.put(`/brand/update/${id}`, body, {
+            headers: { "Content-Type" : "multipart/form-data"}
+        })
     },
     getOneBrand : async (id : string) => {
         return await axiosConfig.get(`brand/view-one/${id}`)

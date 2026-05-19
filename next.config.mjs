@@ -16,15 +16,6 @@ const nextConfig = {
   compiler: {
     removeConsole: process.env.NODE_ENV === "production",
   },
-  redirects: () => {
-    return [
-      {
-        source: "/",
-        destination: "/auth/login",
-        permanent: true,
-      },
-    ];
-  },
 };
 
 export default nextConfig;

@@ -6,10 +6,14 @@ export const productApi = {
         return await axiosConfig("product/view");
     },
     createProduct : async (body : Tlogin)=>{
-        return await axiosConfig.post("product/create", body)
+        return await axiosConfig.post("product/create", body,{
+            headers: { "Content-Type" : "multipart/form-data"}
+        })
     },
     updateProduct : async (id : string, body: Tlogin) => {
-        return await axiosConfig.put(`product/update/${id}`, body)
+        return await axiosConfig.put(`product/update/${id}`, body,{
+            headers: { "Content-Type" : "multipart/form-data"}
+        })
     },
     getOneProduct : async (id : string) => {
         return await axiosConfig.get(`product/view-one/${id}`)

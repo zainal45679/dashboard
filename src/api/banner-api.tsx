@@ -13,7 +13,9 @@ export const bannerApi = {
         return await axiosConfig.get(`banner/view-one/${id}`)
     },
     updateBanner: async (body: object, id: string) => {
-        return await axiosConfig.put(`banner/update/${id}`, body)
+        return await axiosConfig.put(`banner/update/${id}`, body, {
+            headers: { "Content-Type" : "multipart/form-data"}
+        })
     },
     deleteBanner: async (id: string) =>{
         return await axiosConfig.post(`banner/delete/${id}`)

@@ -16,12 +16,16 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import AlertDialog from "../../ui-elements/confirm/page";
+import { storageUrl } from "@/utils/base-url";
+import Image from "next/image";
+
 
 
 type Props = {
   data : [{
     _id : string;
     name: string;
+    image : string;
     description: string;
   }]
 }
@@ -61,6 +65,7 @@ export function BrandTable({data}:Props) {
       <Table>
         <TableHeader>
           <TableRow className="border-t text-base [&>th]:h-auto [&>th]:py-3 sm:[&>th]:py-4.5">
+            <TableHead>Image</TableHead>
             <TableHead className="min-w-[120px] pl-5 sm:pl-6 xl:pl-7.5">
               Brand Name
             </TableHead>
@@ -77,16 +82,17 @@ export function BrandTable({data}:Props) {
               key={data._id}
             >
               <TableCell className="flex min-w-fit items-center gap-3 pl-5 sm:pl-6 xl:pl-7.5">
-                {/* <Image
-                  src={data.image}
+                <Image
+                  src={storageUrl + data.image}
                   className="aspect-[6/5] w-15 rounded-[5px] object-cover"
                   width={60}
                   height={50}
-                  alt={"Image for product " + product.name}
+                  alt={"Image for product " + data.name}
                   role="presentation"
-                /> */}
-                <div>{data.name}</div>
+                />
               </TableCell>
+
+              <TableCell>{data.name}</TableCell>
 
               <TableCell>{data.description}</TableCell>
               

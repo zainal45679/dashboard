@@ -5,7 +5,7 @@ import { TextAreaGroup } from "@/components/FormElements/InputGroup/text-area";
 import { Select } from "@/components/FormElements/select";
 import { ShowcaseSection } from "@/components/Layouts/showcase-section";
 import { error } from "console";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import z, { array } from 'zod'
 import { Schema } from "zod/v3";
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -15,11 +15,22 @@ import { useEffect, useState } from "react";
 import { categoryApi } from "@/api/category-api";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import DropzoneWrapper from "@/components/styles/react-dropzone";
+import Typography from "@mui/material/Typography";
+import FileUploaderSingle from "@/components/FormElements/FileUpload/fileUploaderSingle";
 
 type Props = {
   brands : any,
   categories : any
 }
+
+const MAX_FILE_SIZE = 5000000;
+  const ACCEPTED_IMAGE_TYPES = [
+    "image/jpeg",
+    "image/jpg",
+    "image/png",
+    "image/webp",
+  ];
 
 const productSchema = z.object({
   name: z.string(),
@@ -27,7 +38,16 @@ const productSchema = z.object({
   brand: z.string(),
   price: z.coerce.number().min(1, "Price is required"), 
   description: z.string(),
+  imageFile: z
+            .any()
+            .refine((file) => file?.size <= MAX_FILE_SIZE, `Max image size is 5MB.`)
+            .refine(
+              (file) => ACCEPTED_IMAGE_TYPES.includes(file?.type),
+              "Only .jpg, .jpeg, .png and .webp formats are supported.",
+          ),
 })
+
+
 
 
 
@@ -35,7 +55,7 @@ export type Tlogin = z.infer<typeof productSchema>
 
 export function ProductAddForm({brands, categories}: Props) {
 
-const { register, handleSubmit, formState : { errors } } = useForm ({ resolver : zodResolver(productSchema) })
+const { register, handleSubmit, formState : { errors }, control } = useForm ({ resolver : zodResolver(productSchema) })
 
 const router = useRouter()
 
@@ -109,6 +129,33 @@ const submit = async(data : Tlogin) =>{
           className="mb-4.5"
         />
         {errors.description && ( <p className='text-red-500'> {errors.description.message as string} </p>)}
+
+        <DropzoneWrapper>
+          <Typography variant="h6" sx={{ mb: 2.5 }}>
+            Image:
+            {!!errors.imageFile && (
+              <span
+                style={{ color: "red", fontSize: "14px", marginLeft: "2px" }}
+              >
+                Invalid Image format or Image is Required {!!errors.imageFile}
+              </span>
+            )}
+          </Typography>
+          <Controller
+            name="imageFile"
+            control={control}
+            defaultValue=""
+            render={({ field }) => (
+              <div>
+                <FileUploaderSingle
+                  file={field.value}
+                  setFile={field.onChange}
+                  error={errors.imageFile}
+                />
+              </div>
+            )}
+          />
+        </DropzoneWrapper>
 
         <button className="mt-6 flex w-full justify-center rounded-lg bg-primary p-[13px] font-medium text-white hover:bg-opacity-90">
           ADD
