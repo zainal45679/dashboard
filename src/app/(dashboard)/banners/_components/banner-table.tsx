@@ -18,11 +18,13 @@ import { toast } from "sonner";
 import IconButton from "@mui/material/IconButton";
 import AlertDialog from "../../ui-elements/confirm/page";
 import { useState } from "react";
+import { storageUrl } from "@/utils/base-url";
 
 type bannerItems = {
   data : [{
     _id : string;
     name : string;
+    image : string;
     description : string; 
   }]
 }
@@ -78,14 +80,14 @@ export function BannerTable({data}: bannerItems) {
               key={data._id}
             >
               <TableCell className="flex min-w-fit items-center gap-3 pl-5 sm:pl-6 xl:pl-7.5">
-                {/* <Image
-                  src={data.image}
+                <Image
+                  src={storageUrl + data.image}
                   className="aspect-[6/5] w-15 rounded-[5px] object-cover"
                   width={60}
                   height={50}
                   alt={"Image for product " + data.name}
                   role="presentation"
-                /> */}
+                />
                 <div>{data.name}</div>
               </TableCell>
               <TableCell>{data.description}</TableCell>

@@ -1,30 +1,30 @@
-/** @type {import("next").NextConfig} */
+/** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    qualities: [75, 100],
+    unoptimized: true,
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "cdn.sanity.io",
-        port: ""
+        hostname: "**",
       },
       {
-        protocol: "https",
-        hostname: "lh3.googleusercontent.com",
-        port: ""
+        protocol: "http",
+        hostname: "**",
       },
+    ],
+  },
+  compiler: {
+    removeConsole: process.env.NODE_ENV === "production",
+  },
+  redirects: () => {
+    return [
       {
-        protocol: "https",
-        hostname: "avatars.githubusercontent.com",
-        port: ""
+        source: "/",
+        destination: "/auth/login",
+        permanent: true,
       },
-      {
-        protocol: "https",
-        hostname: "pub-b7fd9c30cdbf439183b75041f5f71b92.r2.dev",
-        port: ""
-      }
-    ]
-  }
+    ];
+  },
 };
 
 export default nextConfig;
