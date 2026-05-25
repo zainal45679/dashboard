@@ -18,7 +18,10 @@ export const productApi = {
     getOneProduct : async (id : string) => {
         return await axiosConfig.get(`product/view-one/${id}`)
     },
-    deleteProduct : async (id : string) => {
+    deleteProduct: async (id: string) =>{
         return await axiosConfig.post(`product/delete/${id}`)
-    }
+    },
+    featuredProduct : async (id : string) => {
+        return await axiosConfig.post(`product/featured/${id}`)
+    },
 }

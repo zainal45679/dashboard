@@ -18,6 +18,8 @@ import { useRouter } from "next/navigation";
 import AlertDialog from "../../ui-elements/confirm/page";
 import { useState } from "react";
 import { storageUrl } from "@/utils/base-url";
+import Switch from '@mui/material/Switch';
+import SwitcherTwo from "@/components/FormElements/Switchers/SwitcherTwo";
 
 type Props = {
   data : [{
@@ -27,6 +29,7 @@ type Props = {
     category: string;
     brand: string;
     price: number;
+    featured: boolean;
     description: string;
     brandDetails: any;
     categoryDetails: any;
@@ -39,12 +42,28 @@ export function ProductTable({data}: Props) {
 
   const router = useRouter()
 
+  const label = { slotProps: { input: { 'aria-label': 'Switch demo' } } };
+
   const handleDelete = async(id: string) => {
     const res = await productApi.deleteProduct(id)
     try{
       if (res.data.message) {
         toast.success(res.data.message)
         router.push("/products")
+      } else {
+        toast.error(res.data.message)
+      }
+    } catch (error) {
+      toast.error("Server error")
+    }
+  }
+
+  const handleFeatured = async(id: string) => {
+    try {
+      const res = await productApi.featuredProduct(id)
+      if (res.data.message) {
+        toast.success(res.data.message)
+        router.refresh()
       } else {
         toast.error(res.data.message)
       }
@@ -78,6 +97,7 @@ export function ProductTable({data}: Props) {
             <TableHead>Brand</TableHead>
             <TableHead>Price</TableHead>
             <TableHead>Description</TableHead>
+            <TableHead>Featured</TableHead>
             <TableHead>Edit</TableHead>
             <TableHead>Delete</TableHead>
           </TableRow>
@@ -99,6 +119,7 @@ export function ProductTable({data}: Props) {
                   role="presentation"
                 />
               </TableCell>
+              
               <TableCell>{product.name}</TableCell>
 
               <TableCell>{product.brandDetails[0]?.name}</TableCell>
@@ -111,6 +132,7 @@ export function ProductTable({data}: Props) {
               <TableCell className="pr-5 sm:pr-6 xl:pr-7.5">
                 {product.description}
               </TableCell>
+              <TableCell><SwitcherTwo id={product._id} featured={product.featured} onToggle={()=>handleFeatured(product._id)}/></TableCell>
               <TableCell><Link href={`products/${product._id}`}><EditIcon/></Link></TableCell>
               <TableCell><DeleteIcon onClick={() => {setDeleteId(product._id); setOpen(true)}}/></TableCell>
             </TableRow>

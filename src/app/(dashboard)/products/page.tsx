@@ -8,6 +8,7 @@ import { ProductAddForm } from './_components/product-add-form'
 
 const api = async ()=>{
   const response = await productApi.getAllProducts()
+  console.log(response.data.data.products);
   return response.data.data.products
 }
 
