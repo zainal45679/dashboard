@@ -37,7 +37,7 @@ const router = useRouter()
 
 const categorySchema = z.object({
   name : z.string().min(3),
-  description : z.string().min(10),
+  description : z.string().min(3),
   imageFile: z
     .any()
     .optional()

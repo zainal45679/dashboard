@@ -28,7 +28,7 @@ const MAX_FILE_SIZE = 5000000;
 
 const categorySchema = z.object({
   name : z.string().min(3),
-  description : z.string().min(10),
+  description : z.string().min(3),
   imageFile: z
           .any()
           .refine((file) => file?.size <= MAX_FILE_SIZE, `Max image size is 5MB.`)
@@ -51,7 +51,7 @@ const submit = async ( data : Tlogin ) => {
     } else {
       toast.error(res.data.message)
     }
-  } catch (error) {
+  }catch (error) {
     toast.error("Server Error")
   }
 }

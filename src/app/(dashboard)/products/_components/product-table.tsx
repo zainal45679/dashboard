@@ -42,8 +42,6 @@ export function ProductTable({data}: Props) {
 
   const router = useRouter()
 
-  const label = { slotProps: { input: { 'aria-label': 'Switch demo' } } };
-
   const handleDelete = async(id: string) => {
     const res = await productApi.deleteProduct(id)
     try{
